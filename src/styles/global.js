@@ -7,6 +7,16 @@ import FONTS, { loadFonts } from "./fonts";
 const GlobalStyles = createGlobalStyle`
   ${loadFonts}
 
+.home,
+.home-wordmark,
+.header-link,
+.home-project-card,
+.project-page,
+.project-header,
+.back-home {
+  color: #c94576;
+}
+
   :root {
     --pink: #c94576;
     --pink-hover: #4e345e;

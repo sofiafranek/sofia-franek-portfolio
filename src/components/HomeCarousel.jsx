@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import { urlForImage } from "@/sanity/image";
 
-export default function HomeCarousel({ projects }) {
+export default function HomeCarousel({ projects = [] }) {
   const trackRef = useRef(null);
   const cardRefs = useRef([]);
 
@@ -16,15 +16,20 @@ export default function HomeCarousel({ projects }) {
   const calculateOffsets = useCallback(() => {
     const firstCard = cardRefs.current[0];
 
-    if (!firstCard) return;
+    if (!firstCard) {
+      setCardOffsets([]);
+      return;
+    }
 
     const firstCardLeft = firstCard.offsetLeft;
 
-    setCardOffsets(
-      cardRefs.current.map((card) =>
-        card ? card.offsetLeft - firstCardLeft : 0
-      )
-    );
+    const nextOffsets = cardRefs.current.map((card) => {
+      if (!card) return 0;
+
+      return card.offsetLeft - firstCardLeft;
+    });
+
+    setCardOffsets(nextOffsets);
   }, []);
 
   useEffect(() => {
@@ -37,10 +42,17 @@ export default function HomeCarousel({ projects }) {
     }
 
     cardRefs.current.forEach((card) => {
-      if (card) observer.observe(card);
+      if (card) {
+        observer.observe(card);
+      }
     });
 
-    return () => observer.disconnect();
+    window.addEventListener("resize", calculateOffsets);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", calculateOffsets);
+    };
   }, [calculateOffsets, projects.length]);
 
   const handleNext = () => {
@@ -72,10 +84,14 @@ export default function HomeCarousel({ projects }) {
           ref={trackRef}
           className="home-project-track"
           style={{
-            transform: `translate3d(-${cardOffsets[activeIndex] || 0}px, 0, 0)`
+            transform: `translate3d(-${
+              cardOffsets[Math.min(activeIndex, cardOffsets.length - 1)] || 0
+            }px, 0, 0)`
           }}
         >
           {projects.map((project, index) => {
+            if (!project.featuredImage) return null;
+
             const imageUrl = urlForImage(project.featuredImage)
               .width(1400)
               .quality(90)
@@ -107,10 +123,11 @@ export default function HomeCarousel({ projects }) {
                   <Image
                     src={imageUrl}
                     alt={
-                      project.featuredImage.alt || `${project.title} project`
+                      project.featuredImage?.alt || `${project.title} project`
                     }
                     fill
-                    priority={index < 3}
+                    loading={index < 2 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : "auto"}
                     sizes="(max-width: 767px) calc(100vw - 36px), 414px"
                   />
                 </div>

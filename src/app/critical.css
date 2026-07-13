@@ -1,0 +1,131 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow-x: hidden;
+  background: #f8efeb;
+}
+
+.home {
+  --page-padding: clamp(66px, 5.2vw, 100px);
+  --card-width: clamp(300px, 39vh, 414px);
+  --card-gap: clamp(66px, 5.3vw, 104px);
+
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  background: #f8efeb;
+}
+
+.home-header {
+  position: absolute;
+  top: clamp(44px, 6.4vh, 88px);
+  left: var(--page-padding);
+  right: var(--page-padding);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-project-window {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.home-project-track {
+  width: max-content;
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--card-gap);
+  padding:
+    0
+    clamp(160px, 12vw, 240px)
+    0
+    var(--page-padding);
+}
+
+.home-project-card {
+  position: relative;
+  flex: 0 0 var(--card-width);
+  width: var(--card-width);
+  min-width: var(--card-width);
+  max-width: var(--card-width);
+}
+
+.home-project-heading {
+  position: relative;
+  height: clamp(102px, 13.4vh, 145px);
+}
+
+.home-project-image {
+  position: relative;
+  width: 100%;
+  height: clamp(400px, 55vh, 550px);
+  overflow: hidden;
+  background: #fff;
+}
+
+.project-height-tall .home-project-image {
+  height: clamp(450px, 60vh, 600px);
+}
+
+.home-project-image img {
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 767px) {
+  .home {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+
+  .home-header {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    padding: 28px 18px 70px;
+  }
+
+  .home-project-window {
+    position: relative;
+    inset: auto;
+    overflow: visible;
+  }
+
+  .home-project-track {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    flex-direction: column;
+    padding: 0 18px 60px;
+  }
+
+  .home-project-card {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .home-project-image,
+  .project-height-tall .home-project-image {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}

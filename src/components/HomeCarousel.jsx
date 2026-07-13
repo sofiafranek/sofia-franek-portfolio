@@ -6,6 +6,8 @@ import Link from "next/link";
 
 import { urlForImage } from "@/sanity/image";
 
+import HomeLoader from "@/components/HomeLoader";
+
 export default function HomeCarousel({ projects }) {
   const trackRef = useRef(null);
   const cardRefs = useRef([]);
@@ -53,6 +55,8 @@ export default function HomeCarousel({ projects }) {
 
   return (
     <main className="home">
+      <HomeLoader />
+      
       <header className="home-header">
         <Link href="/" className="home-wordmark">
           sofia franek.
@@ -129,7 +133,7 @@ export default function HomeCarousel({ projects }) {
           onClick={handlePrevious}
           aria-label="Show previous project"
         >
-          ←
+          <span className="button-arrow" aria-hidden="true" />
         </button>
       )}
 
@@ -140,7 +144,7 @@ export default function HomeCarousel({ projects }) {
           onClick={handleNext}
           aria-label="Show next project"
         >
-          →
+          <span className="button-arrow" aria-hidden="true" />
         </button>
       )}
     </main>

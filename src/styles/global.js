@@ -7,6 +7,46 @@ import FONTS, { loadFonts } from "./fonts";
 const GlobalStyles = createGlobalStyle`
   ${loadFonts}
 
+  .home-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(0);
+  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.home-loader-leaving {
+  transform: translateY(-100%);
+}
+
+.home-loader-line {
+  width: min(480px, calc(100vw - 72px));
+  height: 4px;
+  background: rgba(207, 71, 124, 0.15);
+  overflow: hidden;
+}
+
+.home-loader-line span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--pink);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: loaderLine 1.2s cubic-bezier(0.76, 0, 0.24, 1)
+    forwards;
+}
+
+@keyframes loaderLine {
+  to {
+    transform: scaleX(1);
+  }
+}
+
   :root {
     --pink: #c94576;
     --pink-hover: #4e345e;
@@ -25,7 +65,11 @@ const GlobalStyles = createGlobalStyle`
   html {
     width: 100%;
     min-height: 100%;
-    scroll-behavior: smooth;
+  }
+
+  .project-scroll {
+    padding: 0;
+    border: 0;
   }
 
   body {
@@ -109,7 +153,7 @@ const GlobalStyles = createGlobalStyle`
 
   color: var(--pink);
 
-  font-size: clamp(11px, 0.92vw, 14px);
+  font-size: clamp(12px, 1vw, 14px);
   line-height: 1;
   font-weight: 500;
   text-transform: uppercase;
@@ -141,7 +185,7 @@ const GlobalStyles = createGlobalStyle`
     align-items: center;
     gap: 12px;
     font-family: ${FONTS.body.medium};
-    font-size: clamp(11px, 0.92vw, 14px);
+    font-size: clamp(12px, 1vw, 14px);
     line-height: 1;
     font-weight: 500;
     text-transform: uppercase;
@@ -344,6 +388,19 @@ const GlobalStyles = createGlobalStyle`
      Homepage navigation arrows
   --------------------------------- */
 
+.home-next-button,
+.home-prev-button,
+.project-scroll {
+  color: var(--cream);
+  background: var(--pink);
+}
+
+.home-next-button:hover,
+.home-prev-button:hover,
+.project-scroll:hover {
+  background: var(--pink-hover);
+}
+
   .home-slider-button,
   .home-next-button,
   .home-prev-button {
@@ -377,18 +434,6 @@ const GlobalStyles = createGlobalStyle`
     left: var(--page-padding);
   }
 
-  .home-slider-button svg,
-  .home-next-button svg,
-  .home-prev-button svg {
-    width: 42%;
-    height: auto;
-  }
-
-  .home-slider-button-previous svg,
-  .home-prev-button svg {
-    transform: rotate(180deg);
-  }
-
   .home-slider-button-next:hover,
   .home-next-button:hover {
     transform: translateX(6px);
@@ -400,6 +445,41 @@ const GlobalStyles = createGlobalStyle`
     transform: translateX(-6px);
     background: var(--pink-hover);
   }
+
+.button-arrow {
+  width: 45px;
+  height: 45px;
+  display: block;
+  background: currentColor;
+
+  -webkit-mask-image: url("/icons/arrow-2.svg");
+  mask-image: url("/icons/arrow-2.svg");
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-position: center;
+  mask-position: center;
+
+  -webkit-mask-size: contain;
+  mask-size: contain;
+
+  transform-origin: center;
+}
+
+.home-slider-button-previous .button-arrow,
+.home-prev-button .button-arrow {
+  transform: rotate(180deg);
+}
+
+.home-slider-button-next .button-arrow,
+.home-next-button .button-arrow {
+  transform: rotate(0deg);
+}
+
+.project-scroll .button-arrow {
+  transform: rotate(90deg);
+}
 
   /* ---------------------------------
      Project page
@@ -488,14 +568,23 @@ const GlobalStyles = createGlobalStyle`
     font-weight: 400;
   }
 
-  .project-category {
-    display: block;
-    font-family: ${FONTS.body.medium};
-    font-size: clamp(12px, 1vw, 14px);
-    line-height: 1;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
+.project-categories {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-categories li {
+  font-family: ${FONTS.body.medium};
+  font-size: clamp(12px, 1vw, 14px);
+  line-height: 1.2;
+  font-weight: 600;
+  text-transform: uppercase;
+}
 
   .project-scroll {
     align-self: end;
@@ -682,6 +771,272 @@ const GlobalStyles = createGlobalStyle`
     transform-origin: left;
   }
 
+/* ---------------------------------
+   Editorial project text
+--------------------------------- */
+
+.project-text-section,
+.project-statement-section {
+  width: 100%;
+}
+
+.project-section-cream {
+  background: var(--cream);
+  color: var(--pink);
+}
+
+.project-section-pink {
+  background: var(--pink);
+  color: var(--cream);
+}
+
+.project-text-section {
+  min-height: clamp(420px, 42vw, 420px);
+  display: grid;
+  gap: clamp(50px, 8vw, 150px);
+  padding:
+    clamp(70px, 8vw, 130px)
+    clamp(42px, 5.2vw, 100px);
+}
+
+.project-text-split {
+  grid-template-columns: minmax(120px, 0.55fr) 2fr;
+}
+
+.project-text-centred {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.project-text-large {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.project-text-label {
+  font-family: ${FONTS.body.medium};
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.project-text-content {
+  width: 100%;
+  max-width: 950px;
+}
+
+.project-text-split .project-text-content {
+  margin-left: auto;
+}
+
+.project-text-content h2 {
+  max-width: 900px;
+  margin: 0;
+  font-family: ${FONTS.display.regular};
+  font-size: clamp(49px, 4.6vw, 65px);
+  line-height: 0.94;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+}
+
+.project-text-large .project-text-content h2 {
+  font-size: clamp(62px, 7.5vw, 140px);
+}
+
+.project-text-content p {
+  max-width: 600px;
+  margin:
+    clamp(40px, 5vw, 80px)
+    0
+    0
+    auto;
+  font-family: ${FONTS.body.regular};
+  font-size: clamp(18px, 1.6vw, 20px);
+  line-height: 1.25;
+}
+
+.project-text-centred .project-text-content p {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.project-statement-section {
+  min-height: clamp(480px, 60vw, 850px);
+  display: grid;
+  place-items: center;
+  padding:
+    clamp(80px, 10vw, 170px)
+    clamp(42px, 8vw, 160px);
+  text-align: center;
+}
+
+.project-statement-section p {
+  max-width: 1200px;
+  margin: 0;
+  font-family: ${FONTS.display.regular};
+  font-size: clamp(58px, 7vw, 135px);
+  line-height: 0.92;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+/* Gallery image ratios */
+
+.project-image-landscape {
+  aspect-ratio: 1.75 / 1;
+}
+
+.project-image-square {
+  aspect-ratio: 1 / 1;
+}
+
+.project-gallery-image-natural {
+  overflow: visible;
+}
+
+.project-gallery-image-natural img {
+  position: relative !important;
+  width: 100%;
+  height: auto;
+}
+
+.project-gallery-split .project-gallery-image {
+  width: 100%;
+}
+
+.project-split-portrait .project-gallery-image {
+  aspect-ratio: 0.73 / 1;
+}
+
+.project-split-square .project-gallery-image {
+  aspect-ratio: 1 / 1;
+}
+
+.project-split-landscape .project-gallery-image {
+  aspect-ratio: 1.35 / 1;
+}
+
+.project-gallery-image {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* ---------------------------------
+   Next project
+--------------------------------- */
+
+.next-project-section {
+  overflow: hidden;
+  background: var(--pink);
+  color: var(--cream);
+}
+
+.next-project-link {
+  display: block;
+}
+
+.next-project-marquee {
+  width: 100%;
+  overflow: hidden;
+  padding: clamp(22px, 2.2vw, 36px) 0;
+  border-bottom: 1px solid rgb(248 239 235 / 35%);
+}
+
+.next-project-marquee-track {
+  width: max-content;
+  display: flex;
+  white-space: nowrap;
+  animation: nextProjectMarquee 30s linear infinite;
+}
+
+.next-project-marquee-track span {
+  font-family: ${FONTS.display.regular};
+  font-size: clamp(42px, 4vw, 82px);
+  line-height: 0.9;
+  font-weight: 400;
+  text-transform: lowercase;
+}
+
+.next-project-link:hover
+  .next-project-marquee-track {
+  animation-play-state: paused;
+}
+
+.next-project-preview {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.75fr) 1.5fr;
+  gap: clamp(50px, 8vw, 150px);
+  align-items: end;
+  padding:
+    clamp(70px, 8vw, 130px)
+    var(--project-padding);
+}
+
+.next-project-copy {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(24px, 3vw, 50px);
+}
+
+.next-project-number {
+  font-family: ${FONTS.display.regular};
+  font-size: clamp(48px, 5vw, 90px);
+  line-height: 0.8;
+}
+
+.next-project-copy h2 {
+  margin: 0 0 12px;
+  font-family: ${FONTS.display.regular};
+  font-size: clamp(38px, 4vw, 76px);
+  line-height: 0.9;
+  font-weight: 400;
+  text-transform: lowercase;
+}
+
+.next-project-copy p {
+  margin: 0;
+  font-family: ${FONTS.body.medium};
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.next-project-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.5 / 1;
+  overflow: hidden;
+}
+
+.next-project-image img {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s ease;
+}
+
+.next-project-link:hover .next-project-image img {
+  transform: scale(1.02);
+}
+
+@keyframes nextProjectMarquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .next-project-marquee-track {
+    animation: none;
+  }
+}
+
   /* ---------------------------------
      Tablet
   --------------------------------- */
@@ -742,6 +1097,49 @@ const GlobalStyles = createGlobalStyle`
   --------------------------------- */
 
   @media (max-width: 767px) {
+  .project-text-section {
+  min-height: auto;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  padding: 70px 18px;
+}
+
+.project-text-content h2 {
+  font-size: 46px;
+}
+
+.project-text-large .project-text-content h2 {
+  font-size: 58px;
+}
+
+.project-text-content p {
+  margin-top: 40px;
+  font-size: 18px;
+}
+
+.project-statement-section {
+  min-height: 520px;
+  padding: 80px 18px;
+}
+
+.project-statement-section p {
+  font-size: 52px;
+}
+
+.next-project-preview {
+  grid-template-columns: 1fr;
+  gap: 55px;
+  padding: 70px 18px;
+}
+
+.next-project-image {
+  aspect-ratio: 1 / 1;
+}
+
+.next-project-marquee-track span {
+  font-size: 44px;
+}
+
     body:has(.home) {
       height: auto;
       overflow-x: hidden;
@@ -779,7 +1177,7 @@ const GlobalStyles = createGlobalStyle`
     .header-link,
     .back-home {
       gap: 7px;
-      font-size: 8px;
+      font-size: 10px;
     }
 
     .header-link-icon,

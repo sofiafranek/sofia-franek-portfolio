@@ -25,26 +25,57 @@ export const PROJECT_QUERY = defineQuery(`
     title,
     "slug": slug.current,
     projectNumber,
-    category,
+    categories,
     description,
+
     gallery[] {
       _key,
       _type,
 
       _type == "wideImage" => {
         ...,
-        alt
+        alt,
+        imageRatio
       },
 
       _type == "splitRow" => {
+        imageRatio,
+
         leftImage {
           ...,
           alt
         },
+
         rightImage {
           ...,
           alt
         }
+      },
+
+      _type == "textSection" => {
+        label,
+        heading,
+        body,
+        layout,
+        theme
+      },
+
+      _type == "statementSection" => {
+        text,
+        theme
+      }
+    },
+
+    nextProject-> {
+      _id,
+      title,
+      "slug": slug.current,
+      projectNumber,
+      category,
+      description,
+      featuredImage {
+        ...,
+        alt
       }
     }
   }

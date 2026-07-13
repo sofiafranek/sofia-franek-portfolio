@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import ProjectGallery from "@/components/ProjectGallery";
 import { client } from "@/sanity/client";
 import { PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/sanity/queries";
+
+import ProjectGallery from "@/components/ProjectGallery";
+import NextProject from "@/components/NextProject";
+import ScrollToImages from "@/components/ScrollToImages";
 
 export const revalidate = 60;
 
@@ -12,6 +15,17 @@ export async function generateStaticParams() {
 
   return projects.map(({ slug }) => ({ slug }));
 }
+
+const scrollToImages = (event) => {
+  event.preventDefault();
+
+  document
+    .getElementById("project-images")
+    ?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+};
 
 export default async function ProjectPage({ params }) {
   const { slug } = await params;
@@ -47,20 +61,22 @@ export default async function ProjectPage({ params }) {
           <div className="project-copy">
             <h1>{project.title}</h1>
             <p>{project.description}</p>
-            <span className="project-category">{project.category}</span>
+            {project.categories?.length > 0 && (
+              <ul className="project-categories">
+                {project.categories.map((category) => (
+                  <li key={category}>{category}</li>
+                ))}
+              </ul>
+            )}
           </div>
 
-          <a
-            href="#project-images"
-            className="project-scroll"
-            aria-label="Scroll to project images"
-          >
-            ↓
-          </a>
+          <ScrollToImages />
         </div>
       </section>
 
       <ProjectGallery gallery={project.gallery} projectTitle={project.title} />
+
+      <NextProject project={project.nextProject} />
     </main>
   );
 }

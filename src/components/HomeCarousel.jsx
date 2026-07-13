@@ -6,8 +6,6 @@ import Link from "next/link";
 
 import { urlForImage } from "@/sanity/image";
 
-import HomeLoader from "@/components/HomeLoader";
-
 export default function HomeCarousel({ projects }) {
   const trackRef = useRef(null);
   const cardRefs = useRef([]);
@@ -55,8 +53,6 @@ export default function HomeCarousel({ projects }) {
 
   return (
     <main className="home">
-      <HomeLoader />
-      
       <header className="home-header">
         <Link href="/" className="home-wordmark">
           sofia franek.

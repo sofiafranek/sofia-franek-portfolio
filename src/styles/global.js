@@ -7,46 +7,6 @@ import FONTS, { loadFonts } from "./fonts";
 const GlobalStyles = createGlobalStyle`
   ${loadFonts}
 
-  .home-loader {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: var(--cream);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(0);
-  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.home-loader-leaving {
-  transform: translateY(-100%);
-}
-
-.home-loader-line {
-  width: min(480px, calc(100vw - 72px));
-  height: 4px;
-  background: rgba(207, 71, 124, 0.15);
-  overflow: hidden;
-}
-
-.home-loader-line span {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: var(--pink);
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: loaderLine 1.2s cubic-bezier(0.76, 0, 0.24, 1)
-    forwards;
-}
-
-@keyframes loaderLine {
-  to {
-    transform: scaleX(1);
-  }
-}
-
   :root {
     --pink: #c94576;
     --pink-hover: #4e345e;

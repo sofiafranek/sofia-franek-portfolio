@@ -24,7 +24,7 @@ const GlobalStyles = createGlobalStyle`
     --white: #ffffff;
 
     --page-padding: clamp(66px, 5.2vw, 100px);
-    --card-width: clamp(300px, 39vh, 414px);
+--card-width: clamp(360px, 46vh, 520px);
     --card-gap: clamp(66px, 5.3vw, 104px);
   }
 
@@ -296,7 +296,7 @@ const GlobalStyles = createGlobalStyle`
     font-family: ${FONTS.display.regular};
     font-size: clamp(24px, 2.6vh, 32px);
     line-height: 0.94;
-    font-weight: 400;
+    font-weight: 500;
     text-align: left;
     text-transform: lowercase;
   }

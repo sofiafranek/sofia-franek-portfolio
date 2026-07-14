@@ -37,26 +37,6 @@ export default function AboutPage() {
             and connects with people in a genuine way.
           </p>
         </div>
-
-        <nav className="about-links" aria-label="Social links">
-          <a href="mailto:hello@sofiafranek.com">Email</a>
-
-          <a
-            href="https://www.linkedin.com/in/sofia-franek/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            LinkedIn
-          </a>
-
-          <a
-            href="https://www.instagram.com/bysofiafranek/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Instagram
-          </a>
-        </nav>
       </section>
     </main>
   )

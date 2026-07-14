@@ -668,9 +668,9 @@ const GlobalStyles = createGlobalStyle`
 
   .about-label {
     font-family: ${FONTS.body.medium};
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
   }
 
